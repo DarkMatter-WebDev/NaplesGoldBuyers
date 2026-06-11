@@ -192,7 +192,7 @@
     .hero-sub {
       font-size: 18px;
       color: rgba(255,255,255,0.80);
-      max-width: 560px;
+      white-space: nowrap;
       margin-bottom: 36px;
       line-height: 1.7;
       text-align: center;
@@ -422,6 +422,48 @@
       -webkit-appearance: none;
     }
     .show-mobile { display: none; }
+
+    /* ── HERO ANNOTATION (desktop only) ── */
+    .hero-annotation {
+      position: absolute;
+      top: 26vh;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 4;
+      text-align: center;
+      pointer-events: none;
+      user-select: none;
+      line-height: 1;
+    }
+    .title-and-silver {
+      display: block;
+      font-size: 0.36em;
+      font-style: italic;
+      font-weight: 400;
+      color: #b0bcc8;
+      letter-spacing: 0.20em;
+      line-height: 1.8;
+      text-transform: lowercase;
+    }
+
+    .annotation-caret {
+      display: block;
+      font-size: 15px;
+      color: rgba(195, 210, 225, 0.70);
+      margin-top: 3px;
+      position: relative;
+      left: -42px;
+    }
+    .annotation-text {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 22px;
+      font-weight: 400;
+      color: #bec8d8;
+      letter-spacing: 0.04em;
+      text-shadow: 0 1px 10px rgba(0,0,0,0.5);
+    }
     .estimate-field:focus { border-color: rgba(226,184,74,0.55); }
     .estimate-field::placeholder { color: rgba(255,255,255,0.30); }
     select.estimate-field { cursor: pointer; }
@@ -447,6 +489,7 @@
       .upload-zone { padding: 24px 16px; }
       .hide-mobile { display: none; }
       .show-mobile { display: inline; }
+      .hero-annotation { display: none; }
       .upload-zone.has-files { padding: 20px; }
       .upload-drag-title { font-size: 18px; }
       .upload-thumb, .upload-add-more { width: 80px; height: 80px; }
@@ -500,6 +543,65 @@
       padding: 4px 8px;
     }
     .modal-close:hover { color: #fff; }
+    /* Modal photo strip */
+    .modal-strip-label {
+      font-size: 10px;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      color: #9a8768;
+      margin: 0 0 8px;
+    }
+    .modal-thumb {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .modal-thumb img {
+      width: 68px;
+      height: 68px;
+      object-fit: cover;
+      border-radius: 6px;
+      display: block;
+    }
+    .modal-thumb-rm {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #1c160e;
+      border: 1px solid #555;
+      color: #bbb;
+      font-size: 11px;
+      line-height: 17px;
+      text-align: center;
+      cursor: pointer;
+      padding: 0;
+      z-index: 1;
+    }
+    .modal-add-more {
+      width: 68px;
+      height: 68px;
+      border: 1.5px dashed rgba(226,184,74,0.40);
+      border-radius: 6px;
+      background: transparent;
+      color: rgba(226,184,74,0.70);
+      font-size: 22px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .modal-add-more input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
     @media (max-width: 600px) {
       .modal-box { padding: 40px 20px 28px; }
     }
@@ -516,25 +618,27 @@
       .nav-phone-text { display: none; }
 
       /* Hero */
-      .hero { padding-top: 56px; }
+      .hero { padding-top: 44px; }
 
       /* Swap titles: hide particles, show Cinzel */
       .particle-magic { display: none; }
       h1.floattext-title {
         display: block;
         font-size: clamp(24px, 8.5vw, 44px);
-        top: 12vh;
+        top: 10vh;
         letter-spacing: .10em;
         padding: 0 20px;
       }
 
-      .hero-spacer { flex-basis: 18vh !important; min-height: 18vh !important; }
-      .hero-sub { font-size: 15px; margin-bottom: 8px; }
+      .hero-spacer { flex-basis: 15vh !important; min-height: 15vh !important; }
+      .hero-sub { font-size: 15px; margin-bottom: 4px; white-space: normal; max-width: 320px; margin-left: auto; margin-right: auto; }
 
       /* Collapse the label/divider above upload box — redundant in hero context */
-      #get-estimate { margin-top: 8px !important; }
+      #get-estimate { margin-top: 4px !important; }
       #get-estimate > .section-label,
       #get-estimate > .divider { display: none; }
+      #get-estimate form { margin-top: 0; }
+      #uploadActions { display: none; }
 
       /* CTA buttons — full-width stacked */
       .hero-cta { flex-direction: column; gap: 12px; }
@@ -576,8 +680,7 @@
       .cta-section .btn { display: block; width: 100%; padding: 17px 20px; font-size: 15px; }
       .cta-note { font-size: 13px; padding: 0 8px; }
 
-      /* Footer — room for sticky bar */
-      footer { padding-bottom: 80px; font-size: 12px; }
+      footer { font-size: 12px; }
 
     }
 
@@ -606,17 +709,18 @@
 
   <!-- HERO -->
   <section class="hero">
-    <h1 class="floattext-title">Naples Gold Buyers</h1>
+    <h1 class="floattext-title">Naples Gold<span class="title-and-silver">(and silver)</span>Buyers</h1>
     <div id="magic" class="particle-magic"></div>
-    <div class="hero-spacer" style="flex:0 0 44vh;min-height:44vh;"></div>
+    <div class="hero-annotation" aria-hidden="true">
+      <span class="annotation-text">(and silver)</span>
+      <span class="annotation-caret">v</span>
+    </div>
+    <div class="hero-spacer" style="flex:0 0 46vh;min-height:46vh;"></div>
     <div class="container" style="position:relative;z-index:3;padding-bottom:60px;">
       <div class="hero-content">
         <p class="hero-sub" style="text-shadow:0 2px 16px rgba(0,0,0,0.9);">Send photos below for a fast, honest offer on your gold, silver, coins, and estate jewelry.</p>
         <!-- INLINE PHOTO ESTIMATE -->
         <div id="get-estimate" style="margin-top:32px;">
-          <p class="section-label" style="text-align:center;margin-bottom:10px;">Free Estimate</p>
-          <div class="divider" style="margin:0 auto 24px;"></div>
-
           <form id="estimateForm" name="estimate-request" method="POST"
                 enctype="multipart/form-data" data-netlify="true"
                 netlify-honeypot="bot-field">
@@ -657,7 +761,7 @@
             <input type="hidden" name="item_type" id="formType" value="">
             <input type="hidden" name="notes" id="formNotes" value="">
 
-            <div style="margin-top:24px;text-align:center;">
+            <div id="uploadActions" style="margin-top:24px;text-align:center;">
               <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
                 <button type="submit" class="btn btn-gold" id="submitBtn">
                   Send
@@ -679,7 +783,7 @@
 
         <div class="hero-cta" style="margin-top:36px;">
           <a href="tel:+12394048505" class="btn btn-gold">Call or Text Now: (239) 404-8505</a>
-          <a href="#faq" class="btn btn-outline">See FAQ</a>
+          <a href="https://naplesestatejewelry.co/shop" target="_blank" rel="noopener" class="btn btn-outline">Visit Our Store</a>
         </div>
         <div class="hero-cross-sell" style="margin-top:48px;padding-top:40px;border-top:1px solid rgba(255,255,255,0.12);">
           <p style="font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold-light);margin-bottom:10px;">Want to buy or trade instead?</p>
@@ -835,13 +939,17 @@
       <button class="modal-close" id="modalClose" aria-label="Cancel">&times;</button>
       <p class="section-label" style="text-align:center;margin-bottom:10px;">Almost there</p>
       <h3 id="modalHeading">Tell us a bit more</h3>
-      <p class="modal-hint">We'll review your photos and follow up with a fair offer — no commitment required.</p>
+      <!-- Photo preview strip -->
+      <div id="modalPhotoStrip" style="display:none;margin:12px 0 16px;">
+        <p class="modal-strip-label">Photos to send</p>
+        <div id="modalThumbs" style="display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;"></div>
+      </div>
 
       <input class="estimate-field" id="modalName" type="text" placeholder="Your name (optional)" autocomplete="name">
-      <input class="estimate-field" id="modalPhone" type="tel" placeholder="Best number to reach you" autocomplete="tel" style="margin-top:12px;">
+      <input class="estimate-field" id="modalPhone" type="tel" placeholder="Telephone number" autocomplete="tel" style="margin-top:12px;">
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
-        <input class="estimate-field" id="modalGrams" type="number" min="0" step="0.1" placeholder="Weight in grams">
+        <input class="estimate-field" id="modalGrams" type="number" min="0" step="0.1" placeholder="# Grams">
         <select class="estimate-field" id="modalType">
           <option value="" disabled selected>Type of item</option>
           <option value="Gold">Gold</option>
@@ -859,7 +967,7 @@
           Send &rarr;
         </button>
       </div>
-      <p class="upload-note" style="margin-top:14px;text-align:center;">Photos go directly to us. We reply within one business day.</p>
+      <p class="upload-note" style="margin-top:14px;text-align:center;">Photos go directly to us. We'll be in touch shortly.</p>
     </div>
   </div>
 
@@ -874,6 +982,7 @@
     var countEl       = document.getElementById('uploadCount');
     var submitBtn     = document.getElementById('submitBtn');
     var clearBtn      = document.getElementById('clearPhotosBtn');
+    var actionsEl     = document.getElementById('uploadActions');
     var successEl     = document.getElementById('uploadSuccess');
     var formName      = document.getElementById('formName');
     var formPhone     = document.getElementById('formPhone');
@@ -887,14 +996,65 @@
     var modalGrams    = document.getElementById('modalGrams');
     var modalType     = document.getElementById('modalType');
     var modalNotes    = document.getElementById('modalNotes');
-    var modalSubmitBtn= document.getElementById('modalSubmitBtn');
-    var files    = [];
+    var modalSubmitBtn   = document.getElementById('modalSubmitBtn');
+    var modalPhotoStrip  = document.getElementById('modalPhotoStrip');
+    var modalThumbs      = document.getElementById('modalThumbs');
+    var files = [];
+
+    function renderModalPhotos() {
+      modalThumbs.innerHTML = '';
+      if (files.length === 0) {
+        modalPhotoStrip.style.display = 'none';
+        return;
+      }
+      modalPhotoStrip.style.display = 'block';
+      files.forEach(function(f, i) {
+        var url = URL.createObjectURL(f);
+        var div = document.createElement('div');
+        div.className = 'modal-thumb';
+        div.innerHTML = '<img src="' + url + '" alt="Photo ' + (i + 1) + '">' +
+          '<button type="button" class="modal-thumb-rm" aria-label="Remove photo">&times;</button>';
+        (function(idx, objectUrl) {
+          div.querySelector('button').addEventListener('click', function() {
+            URL.revokeObjectURL(objectUrl);
+            files.splice(idx, 1);
+            renderModalPhotos();
+            render();
+            if (files.length === 0) closeModal();
+          });
+        })(i, url);
+        modalThumbs.appendChild(div);
+      });
+      var label = document.createElement('label');
+      label.className = 'modal-add-more';
+      label.setAttribute('aria-label', 'Add more photos');
+      label.innerHTML = '<span>+</span><input type="file" accept="image/*" multiple tabindex="-1">';
+      label.querySelector('input').addEventListener('change', function(e) {
+        addFiles(e.target.files);
+        e.target.value = '';
+      });
+      modalThumbs.appendChild(label);
+    }
+
+    function openModal() {
+      renderModalPhotos();
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      if (!modalPhone.value) modalPhone.focus();
+    }
 
     function addFiles(newFiles) {
       Array.from(newFiles).forEach(function(f) {
         if (f.type.startsWith('image/')) files.push(f);
       });
       render();
+      if (files.length > 0) {
+        if (modal.classList.contains('active')) {
+          renderModalPhotos();
+        } else {
+          openModal();
+        }
+      }
     }
 
     function render() {
@@ -904,6 +1064,7 @@
         prompt.style.display = '';
         countEl.style.display = 'none';
         clearBtn.style.display = 'none';
+        actionsEl.style.display = 'none';
         return;
       }
       zone.classList.add('has-files');
@@ -937,6 +1098,7 @@
       countEl.textContent = files.length + (files.length === 1 ? ' photo ready' : ' photos ready');
       countEl.style.display = 'block';
       clearBtn.style.display = 'inline-block';
+      actionsEl.style.display = 'block';
     }
 
     // Drag and drop
@@ -952,12 +1114,10 @@
 
     clearBtn.addEventListener('click', function() { files = []; render(); });
 
-    // Step 1: "Get My Estimate" opens the contact modal
+    // "Send" button in upload zone reopens modal if user closed it
     form.addEventListener('submit', function(e) {
       e.preventDefault();
-      modal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-      modalPhone.focus();
+      if (files.length > 0) openModal();
     });
 
     // Close modal handlers
