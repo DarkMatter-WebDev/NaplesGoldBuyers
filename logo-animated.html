@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Naples Gold Buyers — Animated Logo</title>
+<title>Naples Jewelry Buyers — Animated Logo</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -377,7 +377,7 @@ canvas { max-width: 100%; border-radius: 8px; }
       ctx.restore();
     });
 
-    // --- GOLD BUYERS (wide tracking = Palm Beach luxury) ---
+    // --- JEWELRY BUYERS (wide tracking = Palm Beach luxury) ---
     ctx.font = '400 34px Georgia, "Times New Roman", serif';
     const gg = ctx.createLinearGradient(tx, 0, tx + 500, 0);
     gg.addColorStop(0,   G.rich);
@@ -389,12 +389,12 @@ canvas { max-width: 100%; border-radius: 8px; }
     ctx.shadowBlur = 10;
     ctx.shadowColor = 'rgba(176,144,64,0.28)';
     let x2 = tx;
-    for (const ch of 'GOLD  BUYERS') {
+    for (const ch of 'JEWELRY BUYERS') {
       ctx.fillText(ch, x2, cy + 40);
       x2 += ctx.measureText(ch).width + 5.5;  // wider Palm Beach tracking
     }
 
-    // --- NaplesGoldBuyers.com — featured, not a footnote ---
+    // --- NaplesJewelryBuyers.com — featured, not a footnote ---
     ctx.font = '400 20px Georgia, "Times New Roman", serif';
     const urlG = ctx.createLinearGradient(tx, 0, tx + 400, 0);
     urlG.addColorStop(0,   'rgba(176,144,64,0.55)');
@@ -404,7 +404,7 @@ canvas { max-width: 100%; border-radius: 8px; }
     ctx.fillStyle = urlG;
     ctx.shadowBlur = 8;
     ctx.shadowColor = 'rgba(176,144,64,0.25)';
-    ctx.fillText('NaplesGoldBuyers.com', tx, cy + 86);
+    ctx.fillText('NaplesJewelryBuyers.com', tx, cy + 86);
 
     ctx.restore();
   }

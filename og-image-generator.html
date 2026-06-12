@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Generate OG Image — Naples Gold Buyers</title>
+<title>Generate OG Image — Naples Jewelry Buyers</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
 <style>
   body { margin: 0; background: #111; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; font-family: Arial, sans-serif; color: #fff; }
@@ -44,10 +44,10 @@ function draw() {
   x.textAlign = 'center';
   x.fillText('NAPLES', 600, 228);
 
-  // GOLD BUYERS
+  // JEWELRY BUYERS
   x.fillStyle = '#f2ece0';
   x.font = '95px Cinzel, Georgia, serif';
-  x.fillText('GOLD BUYERS', 600, 336);
+  x.fillText('JEWELRY BUYERS', 600, 336);
 
   // Divider line
   x.strokeStyle = '#c8a845';
@@ -70,7 +70,7 @@ function draw() {
   // Website
   x.fillStyle = '#6e6050';
   x.font = '24px "Segoe UI", Arial, sans-serif';
-  x.fillText('NaplesGoldBuyers.com', 600, 530);
+  x.fillText('NaplesJewelryBuyers.com', 600, 530);
 
   // Trigger PNG download
   setTimeout(function() {
@@ -79,7 +79,7 @@ function draw() {
     a.href = c.toDataURL('image/png');
     document.body.appendChild(a);
     a.click();
-    document.getElementById('msg').textContent = 'Done! Move og-image.png into your NaplesGoldBuyers project folder.';
+    document.getElementById('msg').textContent = 'Done! Move og-image.png into your NaplesJewelryBuyers project folder.';
   }, 200);
 }
 </script>
