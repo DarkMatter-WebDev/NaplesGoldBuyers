@@ -473,11 +473,17 @@ if (themeToggle) {
 
 const NAMES = ["DAWN", "MIDDAY", "DUSK", "NIGHT", "STORM"];
 const N = NAMES.length;
-const INITIAL_VISUAL_SCROLL = 0.30;
+const INITIAL_VISUAL_SCROLL = 0.329;
+const DESKTOP_INITIAL_VISUAL_SCROLL = 0.24;
+const DESKTOP_SCROLL_QUERY = "(min-width: 900px)";
+const getInitialVisualScroll = () =>
+  window.matchMedia(DESKTOP_SCROLL_QUERY).matches
+    ? DESKTOP_INITIAL_VISUAL_SCROLL
+    : INITIAL_VISUAL_SCROLL;
 
 let maxScroll = 1;
-let tgt = INITIAL_VISUAL_SCROLL;
-let smooth = INITIAL_VISUAL_SCROLL;
+let tgt = getInitialVisualScroll();
+let smooth = getInitialVisualScroll();
 let velocity = 0;
 
 const scrollEase = 0.1;
@@ -496,7 +502,8 @@ const updateScrollMetrics = () => {
   maxScroll = Math.max(0, document.documentElement.scrollHeight - vh);
   const pageProgress =
     maxScroll > 0 ? Math.min(1, Math.max(0, window.scrollY / maxScroll)) : 0;
-  tgt = INITIAL_VISUAL_SCROLL + pageProgress * (1 - INITIAL_VISUAL_SCROLL);
+  const initialVisualScroll = getInitialVisualScroll();
+  tgt = initialVisualScroll + pageProgress * (1 - initialVisualScroll);
 };
 
 const resize = () => {
