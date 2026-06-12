@@ -473,10 +473,11 @@ if (themeToggle) {
 
 const NAMES = ["DAWN", "MIDDAY", "DUSK", "NIGHT", "STORM"];
 const N = NAMES.length;
+const INITIAL_VISUAL_SCROLL = 0.30;
 
 let maxScroll = 1;
-let tgt = 0;
-let smooth = 0;
+let tgt = INITIAL_VISUAL_SCROLL;
+let smooth = INITIAL_VISUAL_SCROLL;
 let velocity = 0;
 
 const scrollEase = 0.1;
@@ -493,8 +494,9 @@ let lastViewportH = 0;
 const updateScrollMetrics = () => {
   const vh = lastViewportH || window.innerHeight;
   maxScroll = Math.max(0, document.documentElement.scrollHeight - vh);
-  tgt =
+  const pageProgress =
     maxScroll > 0 ? Math.min(1, Math.max(0, window.scrollY / maxScroll)) : 0;
+  tgt = INITIAL_VISUAL_SCROLL + pageProgress * (1 - INITIAL_VISUAL_SCROLL);
 };
 
 const resize = () => {
