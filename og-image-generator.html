@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Generate OG Image — Naples Gold Buyers</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #111; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; font-family: Arial, sans-serif; color: #fff; }
+  canvas { border: 1px solid #333; max-width: 100%; }
+  p { margin-top: 16px; font-size: 14px; opacity: .7; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1200" height="630"></canvas>
+<p id="msg">Generating og-image.png — please wait…</p>
+<script>
+document.fonts.ready.then(function() {
+  setTimeout(draw, 150);
+});
+
+function draw() {
+  var c = document.getElementById('c');
+  var x = c.getContext('2d');
+
+  // Background
+  x.fillStyle = '#1c0a04';
+  x.fillRect(0, 0, 1200, 630);
+
+  // Warm radial glow
+  var g = x.createRadialGradient(600, 290, 0, 600, 290, 560);
+  g.addColorStop(0, 'rgba(60,22,6,0.55)');
+  g.addColorStop(1, 'rgba(28,10,4,0)');
+  x.fillStyle = g;
+  x.fillRect(0, 0, 1200, 630);
+
+  // Gold accent bars
+  x.fillStyle = '#c8a845';
+  x.fillRect(0, 0, 1200, 8);
+  x.fillRect(0, 622, 1200, 8);
+
+  // NAPLES
+  x.fillStyle = '#e2c050';
+  x.font = 'bold 128px Cinzel, Georgia, serif';
+  x.textAlign = 'center';
+  x.fillText('NAPLES', 600, 228);
+
+  // GOLD BUYERS
+  x.fillStyle = '#f2ece0';
+  x.font = '95px Cinzel, Georgia, serif';
+  x.fillText('GOLD BUYERS', 600, 336);
+
+  // Divider line
+  x.strokeStyle = '#c8a845';
+  x.lineWidth = 2;
+  x.beginPath();
+  x.moveTo(360, 368);
+  x.lineTo(840, 368);
+  x.stroke();
+
+  // Tagline
+  x.fillStyle = '#b0a488';
+  x.font = '28px "Segoe UI", Arial, sans-serif';
+  x.fillText('Mobile Gold & Silver Buying Service  ·  Naples, FL', 600, 420);
+
+  // Phone
+  x.fillStyle = '#e2c050';
+  x.font = '44px "Segoe UI", Arial, sans-serif';
+  x.fillText('(239) 404-8505', 600, 484);
+
+  // Website
+  x.fillStyle = '#6e6050';
+  x.font = '24px "Segoe UI", Arial, sans-serif';
+  x.fillText('NaplesGoldBuyers.com', 600, 530);
+
+  // Trigger PNG download
+  setTimeout(function() {
+    var a = document.createElement('a');
+    a.download = 'og-image.png';
+    a.href = c.toDataURL('image/png');
+    document.body.appendChild(a);
+    a.click();
+    document.getElementById('msg').textContent = 'Done! Move og-image.png into your NaplesGoldBuyers project folder.';
+  }, 200);
+}
+</script>
+</body>
+</html>
