@@ -847,8 +847,8 @@
             <div class="upload-success-icon">&#10003;</div>
             <p class="section-label" style="color:var(--gold-light);">Got it!</p>
             <h3 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:600;color:#fff;margin-bottom:12px;">Photos Received</h3>
-            <p style="color:rgba(255,255,255,0.62);font-size:16px;max-width:400px;margin:0 auto 28px;line-height:1.7;">We'll review your items and reach out within one business day. For a faster response, give us a call.</p>
-            <a href="tel:+12394048505" class="btn btn-gold">Call (239) 404-8505</a>
+            <p style="color:rgba(255,255,255,0.62);font-size:16px;max-width:400px;margin:0 auto 28px;line-height:1.7;">We'll review your items and reach out as soon as we can. For a faster response, give us a call.</p>
+            <button type="button" class="btn btn-gold" onclick="window.location.reload()">Submit More Photos</button>
           </div>
         </div>
 
@@ -1020,7 +1020,8 @@
       </div>
 
       <input class="estimate-field" id="modalName" type="text" placeholder="Your name (optional)" autocomplete="name">
-      <input class="estimate-field" id="modalPhone" type="tel" placeholder="Telephone number" autocomplete="tel" style="margin-top:12px;">
+      <input class="estimate-field" id="modalPhone" type="tel" placeholder="Telephone number *" autocomplete="tel" style="margin-top:12px;">
+      <p id="modalPhoneError" style="display:none;margin:6px 0 0;font-size:12px;color:#e05c4b;letter-spacing:.5px;">A phone number is required so we can reach you with your offer.</p>
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
         <input class="estimate-field" id="modalGrams" type="number" min="0" step="0.1" placeholder="# Grams">
@@ -1073,6 +1074,7 @@
     var modalSubmitBtn   = document.getElementById('modalSubmitBtn');
     var modalPhotoStrip  = document.getElementById('modalPhotoStrip');
     var modalThumbs      = document.getElementById('modalThumbs');
+    var modalPhoneError  = document.getElementById('modalPhoneError');
     var files = [];
 
     function renderModalPhotos() {
@@ -1207,8 +1209,19 @@
       if (e.key === 'Escape') closeModal();
     });
 
+    modalPhone.addEventListener('input', function() {
+      modalPhoneError.style.display = 'none';
+      modalPhone.style.borderColor = '';
+    });
+
     // Step 2: modal "Send" does the actual Netlify fetch
     modalSubmitBtn.addEventListener('click', function() {
+      if (!modalPhone.value.trim()) {
+        modalPhoneError.style.display = 'block';
+        modalPhone.style.borderColor = '#e05c4b';
+        modalPhone.focus();
+        return;
+      }
       modalSubmitBtn.disabled = true;
       modalSubmitBtn.textContent = 'Sending…';
 
