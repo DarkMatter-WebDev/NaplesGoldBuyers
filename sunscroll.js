@@ -474,7 +474,7 @@ if (themeToggle) {
 const NAMES = ["DAWN", "MIDDAY", "DUSK", "NIGHT", "STORM"];
 const N = NAMES.length;
 const INITIAL_VISUAL_SCROLL = 0.329;
-const DESKTOP_INITIAL_VISUAL_SCROLL = 0.24;
+const DESKTOP_INITIAL_VISUAL_SCROLL = 0.235;
 const DESKTOP_SCROLL_QUERY = "(min-width: 900px)";
 const getInitialVisualScroll = () =>
   window.matchMedia(DESKTOP_SCROLL_QUERY).matches
