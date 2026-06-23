@@ -929,6 +929,34 @@
       margin-top: 12px;
     }
 
+    /* ── PAGE LOADER ── */
+    #site-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #0d0d10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.55s ease;
+    }
+    #site-loader.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+    #site-loader-spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid rgba(201, 151, 43, 0.22);
+      border-top-color: #C9972B;
+      border-radius: 50%;
+      animation: loader-spin 0.75s linear infinite;
+    }
+    @keyframes loader-spin { to { transform: rotate(360deg); } }
+
+    /* WebGL canvas hidden until ready */
+    #webgl_canvas { opacity: 0; transition: opacity 1s ease; }
+
     /* ── HIDE CAMERA BUTTON ON NON-MOBILE ── */
     @media (min-width: 601px) {
       .camera-choice { display: none !important; }
@@ -975,6 +1003,9 @@
   </style>
 </head>
 <body>
+
+  <!-- PAGE LOADER -->
+  <div id="site-loader"><div id="site-loader-spinner"></div></div>
 
   <!-- WEBGL BACKGROUND -->
   <canvas id="webgl_canvas" style="position:fixed;top:0;left:0;z-index:-1;pointer-events:none;"></canvas>
@@ -1535,7 +1566,11 @@
   (function() {
     var container = document.querySelector('#magic');
     if (!container || typeof THREE === 'undefined') return;
-    if (window.innerWidth < 600) return;
+    if (window.innerWidth < 600) {
+      // No particles on mobile — signal hero is ready immediately
+      if (window.__siteHeroReady) window.__siteHeroReady();
+      return;
+    }
 
     var scene, camera, renderer, particles, geometryCopy, planeArea;
     var mouse = new THREE.Vector2(-200, 200);
@@ -1750,7 +1785,7 @@
 
     var manager = new THREE.LoadingManager();
     var loadedFont, loadedTexture;
-    manager.onLoad = function() { setTimeout(function() { init(loadedFont, loadedTexture); }, 1200); };
+    manager.onLoad = function() { setTimeout(function() { init(loadedFont, loadedTexture); if (window.__siteHeroReady) window.__siteHeroReady(); }, 1200); };
     new THREE.FontLoader(manager).load(
       'https://res.cloudinary.com/dydre7amr/raw/upload/v1612950355/font_zsd4dr.json',
       function(f) { loadedFont = f; }
@@ -1758,6 +1793,52 @@
     loadedTexture = new THREE.TextureLoader(manager).load(
       'https://res.cloudinary.com/dfvtkoboz/image/upload/v1605013866/particle_a64uzf.png'
     );
+  })();
+  </script>
+  <!-- LOADER REVEAL -->
+  <script>
+  (function() {
+    var revealed = false;
+    var windowLoaded = false;
+    var heroReady = false;
+
+    function reveal() {
+      if (revealed) return;
+      revealed = true;
+
+      var loader = document.getElementById('site-loader');
+      var canvas = document.getElementById('webgl_canvas');
+
+      // Fade in canvas (background) simultaneously with loader fade-out
+      if (canvas) canvas.style.opacity = '1';
+
+      // Fade out loader — content and background appear together
+      if (loader) {
+        loader.classList.add('fade-out');
+        setTimeout(function() {
+          if (loader && loader.parentNode) loader.parentNode.removeChild(loader);
+        }, 600);
+      }
+    }
+
+    function checkReveal() {
+      if (windowLoaded && heroReady) setTimeout(reveal, 80);
+    }
+
+    // Signal from particle init (or immediate on mobile where there are no particles)
+    window.__siteHeroReady = function() {
+      heroReady = true;
+      checkReveal();
+    };
+
+    // window.load covers scripts, stylesheets, fonts
+    window.addEventListener('load', function() {
+      windowLoaded = true;
+      checkReveal();
+    });
+
+    // Safety fallback — never hold the spinner longer than 6 s
+    setTimeout(reveal, 6000);
   })();
   </script>
 </body>
