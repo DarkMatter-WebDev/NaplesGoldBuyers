@@ -123,8 +123,8 @@
     }
 
     /* ── UTILITY ── */
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-    .section    { padding: 80px 0; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); }
+    .section    { padding: clamp(52px, 8vw, 80px) 0; }
     .section-alt { }
     .gold       { color: var(--gold); }
     .btn {
@@ -337,16 +337,17 @@
     }
     .hero h1 em { font-style: normal; color: var(--gold-light); }
     .hero-sub {
-      font-size: 18px;
+      font-size: clamp(15px, 2.2vw, 18px);
       color: rgba(255,255,255,0.80);
-      white-space: nowrap;
       margin-bottom: 36px;
       line-height: 1.7;
       text-align: center;
+      max-width: 600px;
+      overflow-wrap: break-word;
     }
     .hero-portal-label {
       position: absolute;
-      top: 33.5vh;
+      top: 44vh;
       left: 0;
       right: 0;
       z-index: 3;
@@ -364,6 +365,7 @@
       flex-wrap: wrap;
       gap: 16px;
       align-items: center;
+      justify-content: center;
     }
 
     /* ── TICKER BANNER ── */
@@ -646,6 +648,7 @@
 
     /* ── HERO ANNOTATION (desktop only) ── */
     .hero-annotation {
+      display: none;
       position: absolute;
       top: 25vh;
       left: 50%;
@@ -655,6 +658,9 @@
       pointer-events: none;
       user-select: none;
       line-height: 1;
+    }
+    @media (min-width: 900px) {
+      .hero-annotation { display: block; }
     }
     .title-and-silver {
       display: block;
@@ -710,11 +716,11 @@
       .upload-zone { padding: 20px 16px; margin-top: 28px; }
       .hide-mobile { display: none; }
       .show-mobile { display: inline; }
-      .hero-annotation { display: none; }
       .upload-zone.has-files { padding: 20px; }
       .upload-drag-title { font-size: 18px; }
       .upload-thumb, .upload-add-more { width: 80px; height: 80px; }
       .estimate-form-fields { grid-template-columns: 1fr; }
+      .modal-fields-grid { grid-template-columns: 1fr; }
     }
 
     /* ── CONTACT MODAL ── */
@@ -853,7 +859,7 @@
 
       .hero-spacer { flex-basis: 22vh !important; min-height: 22vh !important; }
       .hero-portal-label { top: 23vh; font-size: 11px; letter-spacing: 2px; margin-bottom: 6px; }
-      .hero-sub { font-size: 15px; margin-bottom: 4px; white-space: normal; max-width: 320px; margin-left: auto; margin-right: auto; }
+      .hero-sub { font-size: 15px; margin-bottom: 4px; max-width: 320px; margin-left: auto; margin-right: auto; }
       .camera-choice { margin-top: 14px; }
       .btn-camera { min-width: 174px; padding: 13px 24px; font-size: 13px; }
 
@@ -883,7 +889,7 @@
       .claim-strip { padding: 44px 20px !important; }
 
       /* Sections */
-      .section { padding: 48px 0; }
+      .section { padding: 44px 0; }
       .container { padding: 0 18px; }
       .section-title { font-size: clamp(22px, 7vw, 30px); }
       .divider { margin: 16px 0 24px; }
@@ -913,6 +919,58 @@
     @media (max-width: 380px) {
       .nav-logo { font-size: 13px; }
       .items-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── MODAL FIELDS GRID ── */
+    .modal-fields-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    /* ── HIDE CAMERA BUTTON ON NON-MOBILE ── */
+    @media (min-width: 601px) {
+      .camera-choice { display: none !important; }
+    }
+
+    /* ── TABLET (601px – 1023px) ── */
+    @media (min-width: 601px) and (max-width: 1023px) {
+      /* Items grid: 3 columns avoids orphaned 5th card (4-col auto-fit leaves 1 alone) */
+      .items-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      /* Cross-sell button: scale down from the oversized desktop inline styles */
+      .hero-cross-sell-btn {
+        padding: 16px 36px !important;
+        font-size: 16px !important;
+        letter-spacing: 1px !important;
+      }
+
+      /* Nav: shrink logo slightly so phone number doesn't crowd */
+      .nav-logo { font-size: 17px; }
+      .nav-phone { font-size: 15px; }
+    }
+
+    /* ── LAPTOP / DESKTOP (1024px+) ── */
+    @media (min-width: 1024px) {
+      /* All 5 item cards in one row */
+      .items-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
+
+    /* ── LARGE DESKTOP (1440px+) ── */
+    @media (min-width: 1440px) {
+      .container { max-width: 1200px; }
+    }
+
+    /* ── MODAL small screens ── */
+    @media (max-width: 480px) {
+      .modal-fields-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -992,7 +1050,7 @@
             <input type="hidden" name="item_type" id="formType" value="">
             <input type="hidden" name="notes" id="formNotes" value="">
 
-            <div id="uploadActions" style="margin-top:24px;text-align:center;">
+            <div id="uploadActions" style="margin-top:24px;text-align:center;display:none;">
               <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
                 <button type="submit" class="btn btn-gold" id="submitBtn">
                   Send
@@ -1201,7 +1259,7 @@
       <input class="estimate-field" id="modalPhone" type="tel" placeholder="Telephone number *" autocomplete="tel" style="margin-top:12px;">
       <p id="modalPhoneError" style="display:none;margin:6px 0 0;font-size:12px;color:#e05c4b;letter-spacing:.5px;">A phone number is required so we can reach you with your offer.</p>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
+      <div class="modal-fields-grid">
         <input class="estimate-field" id="modalGrams" type="number" min="0" step="0.1" placeholder="# Grams">
         <select class="estimate-field" id="modalType">
           <option value="" disabled selected>Type of item</option>
