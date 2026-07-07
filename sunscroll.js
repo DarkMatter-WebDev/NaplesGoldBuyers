@@ -475,7 +475,7 @@ const NAMES = ["DAWN", "MIDDAY", "DUSK", "NIGHT", "STORM"];
 const N = NAMES.length;
 const INITIAL_VISUAL_SCROLL = 0.329;
 const DESKTOP_INITIAL_VISUAL_SCROLL = 0.235;
-const DESKTOP_SCROLL_QUERY = "(min-width: 900px)";
+const DESKTOP_SCROLL_QUERY = "(min-width: 1025px)";
 const getInitialVisualScroll = () =>
   window.matchMedia(DESKTOP_SCROLL_QUERY).matches
     ? DESKTOP_INITIAL_VISUAL_SCROLL
@@ -497,6 +497,11 @@ let resizeRAF = 0;
 let lastViewportW = 0;
 let lastViewportH = 0;
 
+// px bled past the BOTTOM edge only (invisible; this is a z-index:-1 background).
+// The canvas is anchored at top:0 so the full scene is framed from the top down,
+// while this bottom bleed covers the gap Safari's animating toolbar would reveal.
+const OVERSHOOT = 150;
+
 const updateScrollMetrics = () => {
   const vh = lastViewportH || window.innerHeight;
   maxScroll = Math.max(0, document.documentElement.scrollHeight - vh);
@@ -509,27 +514,38 @@ const updateScrollMetrics = () => {
 const resize = () => {
   resizeRAF = 0;
 
-  const vp = window.visualViewport ?? {
-    width: window.innerWidth,
-    height: window.innerHeight
-  };
+  // CSS viewport units (vh/dvh/lvh/svh) are unreliable on iOS/iPadOS Safari, so
+  // size the fixed background canvas from JS. Take the largest available height
+  // measurement, anchor the canvas at the top (so the full scene is visible from
+  // the top down, not center-cropped) and bleed only past the bottom edge so no
+  // black gap shows through while the Safari toolbar is mid-animation.
+  const viewportH = Math.max(
+    window.innerHeight || 0,
+    document.documentElement.clientHeight || 0,
+    window.visualViewport ? window.visualViewport.height : 0
+  );
 
-  const cssW = Math.round(vp.width);
-  const cssH = Math.round(vp.height);
+  if (viewportH) {
+    canvas.style.top = "0px";
+    canvas.style.height = viewportH + OVERSHOOT + "px";
+  }
+
+  // Derive the drawing buffer from the actual laid-out box (width comes from the
+  // width:100% CSS, height from the JS-set value above).
+  const rect = canvas.getBoundingClientRect();
+  const cssW = Math.round(rect.width);
+  const cssH = Math.round(rect.height);
 
   if (!cssW || !cssH) return;
 
   lastViewportW = cssW;
-  lastViewportH = cssH;
+  lastViewportH = viewportH || cssH;
 
   const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
   const renderScale = dpr * qualityScale;
 
   const pixelW = Math.max(1, Math.round(cssW * renderScale));
   const pixelH = Math.max(1, Math.round(cssH * renderScale));
-
-  canvas.style.width = `${cssW}px`;
-  canvas.style.height = `${cssH}px`;
 
   if (canvas.width !== pixelW || canvas.height !== pixelH) {
     canvas.width = pixelW;
@@ -556,6 +572,10 @@ if (window.visualViewport) {
 }
 
 window.addEventListener("scroll", updateScrollMetrics, { passive: true });
+
+// The iOS/iPadOS Safari toolbar collapses/expands during scroll, which changes
+// innerHeight — re-measure the background canvas so no gap opens at the edges.
+window.addEventListener("scroll", requestResize, { passive: true });
 
 window.addEventListener("load", updateScrollMetrics, { passive: true });
 
