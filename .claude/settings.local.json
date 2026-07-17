@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:www.naplesantiquesllc.com)"
+      "WebFetch(domain:www.naplesantiquesllc.com)",
+      "Bash(netstat -ano)"
     ]
   }
 }

@@ -302,30 +302,22 @@
     /* ── HERO ── */
     .hero {
       position: relative;
-      min-height: 100vh;
+      min-height: 0;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: stretch;
       background: transparent;
       padding-top: 68px;
     }
 
-    /* Particle canvas — desktop title (hidden on mobile) */
-    .particle-magic {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 2;
-    }
-    .particle-magic canvas { display: block; }
-
-    /* Logo hero title — shown on mobile + tablet only (see ≤1024px media query) */
+    /* Logo hero title — shown at all viewport sizes */
     .hero-logo-wrap {
-      display: none;
+      display: block;
       text-align: center;
       pointer-events: none;
+      width: 100%;
+      margin-top: 16px;
+      padding: 0 20px;
     }
     .hero-logo {
       display: block;
@@ -340,6 +332,8 @@
       position: relative;
       z-index: 3;
       max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .hero h1 {
       font-family: 'Playfair Display', serif;
@@ -353,17 +347,17 @@
     .hero-sub {
       font-size: clamp(15px, 2.2vw, 18px);
       color: rgba(255,255,255,0.80);
+      margin-top: 10px;
       margin-bottom: 36px;
       line-height: 1.7;
       text-align: center;
       max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
       overflow-wrap: break-word;
     }
     .hero-portal-label {
-      position: absolute;
-      top: 44vh;
-      left: 0;
-      right: 0;
+      position: static;
       z-index: 3;
       font-size: 12px;
       font-weight: 700;
@@ -371,6 +365,7 @@
       text-transform: uppercase;
       color: var(--gold-light);
       text-align: center;
+      margin-top: -6px;
       margin-bottom: 10px;
       text-shadow: 0 2px 14px rgba(0,0,0,0.75);
     }
@@ -660,51 +655,6 @@
     }
     .show-mobile { display: none; }
 
-    /* ── HERO ANNOTATION (desktop only) ── */
-    .hero-annotation {
-      display: none;
-      position: absolute;
-      top: 25vh;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 4;
-      text-align: center;
-      pointer-events: none;
-      user-select: none;
-      line-height: 1;
-    }
-    @media (min-width: 1025px) {
-      .hero-annotation { display: block; }
-    }
-    .title-and-silver {
-      display: block;
-      font-size: 0.36em;
-      font-style: italic;
-      font-weight: 400;
-      color: #b0bcc8;
-      letter-spacing: 0.20em;
-      line-height: 1.8;
-      text-transform: lowercase;
-    }
-
-    .annotation-caret {
-      display: block;
-      font-size: 15px;
-      color: rgba(195, 210, 225, 0.70);
-      margin-top: 3px;
-      position: relative;
-      left: -42px;
-    }
-    .annotation-text {
-      display: block;
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: 22px;
-      font-weight: 400;
-      color: #bec8d8;
-      letter-spacing: 0.04em;
-      text-shadow: 0 1px 10px rgba(0,0,0,0.5);
-    }
     .estimate-field:focus { border-color: rgba(226,184,74,0.55); }
     .estimate-field::placeholder { color: rgba(255,255,255,0.30); }
     select.estimate-field { cursor: pointer; }
@@ -848,40 +798,8 @@
     }
 
 
-    /* ── MOBILE + TABLET LOGO HERO (≤ 1024px) ── */
-    @media (max-width: 1024px) {
-      /* Desktop particle title + annotation off; logo takes over */
-      .particle-magic { display: none; }
-      .hero-annotation { display: none; }
-
-      /* Flow the hero from the top instead of the centered/spacer layout */
-      .hero {
-        min-height: 0;
-        align-items: stretch;
-      }
-      .hero-spacer { display: none !important; }
-
-      /* Logo wrapper: normal top-of-page block */
-      .hero-logo-wrap {
-        display: block;
-        position: static;
-        width: 100%;
-        margin-top: 16px;
-        padding: 0 20px;
-      }
-
-      /* Portal label + tagline flow beneath the logo (snug under the logo) */
-      .hero-portal-label {
-        position: static;
-        top: auto;
-        margin-top: -6px;
-      }
-      .hero-content { margin-left: auto; margin-right: auto; }
-      .hero-sub { margin-top: 10px; margin-left: auto; margin-right: auto; }
-    }
-
-    /* ── TABLET ONLY (601px – 1024px) ── */
-    @media (min-width: 601px) and (max-width: 1024px) {
+    /* ── LOGO HERO SPACING (601px and up) ── */
+    @media (min-width: 601px) {
       /* Pull the portal label + everything below it up and tighten under the logo */
       .hero-portal-label { margin-top: -28px; }
       .hero-sub { margin-top: 22px; }
@@ -1054,10 +972,6 @@
 </head>
 <body>
 
-  <!-- Early stub: capture the "hero ready" signal even if it fires before the
-       loader-reveal script defines the real handler (particle script runs first). -->
-  <script>window.__siteHeroReady = function(){ window.__heroReadyFired = true; };</script>
-
   <!-- PAGE LOADER -->
   <div id="site-loader"><div id="site-loader-spinner"></div></div>
 
@@ -1081,13 +995,7 @@
       <img class="hero-logo" src="logo.webp" width="1024" height="1024" alt="" fetchpriority="high" decoding="async" loading="lazy" />
     </div>
     <h1 class="sr-only">Naples Gold Buyers</h1>
-    <div id="magic" class="particle-magic"></div>
-    <div class="hero-annotation" aria-hidden="true">
-      <span class="annotation-text">(and silver)</span>
-      <span class="annotation-caret">v</span>
-    </div>
     <p class="hero-portal-label">Photo Upload Portal</p>
-    <div class="hero-spacer" style="flex:0 0 46vh;min-height:46vh;"></div>
     <div class="container" style="position:relative;z-index:3;padding-bottom:60px;">
       <div class="hero-content">
         <p class="hero-sub" style="text-shadow:0 2px 16px rgba(0,0,0,0.9);">Send photos below for a fast, honest offer on your gold, silver, coins, and estate jewelry.</p>
@@ -1583,27 +1491,6 @@
   })();
   </script>
 
-  <script type="x-shader/x-vertex" id="vertexshader">
-    attribute float size;
-    attribute vec3 customColor;
-    varying vec3 vColor;
-    void main() {
-      vColor = customColor;
-      vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
-      gl_PointSize = size * ( 300.0 / -mvPosition.z );
-      gl_Position = projectionMatrix * mvPosition;
-    }
-  </script>
-  <script type="x-shader/x-fragment" id="fragmentshader">
-    uniform vec3 color;
-    uniform sampler2D pointTexture;
-    varying vec3 vColor;
-    void main() {
-      gl_FragColor = vec4( color * vColor, 1.0 );
-      gl_FragColor = gl_FragColor * texture2D( pointTexture, gl_PointCoord );
-    }
-  </script>
-
   <script src="sunscroll.js"></script>
   <script>
     window.addEventListener('load', function() {
@@ -1616,256 +1503,10 @@
     });
   </script>
 
-  <script>
-  (function() {
-    var container = document.querySelector('#magic');
-    function heroReady() { if (window.__siteHeroReady) window.__siteHeroReady(); }
-
-    // Mobile/tablet show the logo instead of particles — never fetch three.js (~600KB).
-    if (!container || window.innerWidth < 1025) { heroReady(); return; }
-
-    // Desktop only: pull three.js on demand, then build the particle title.
-    var threeScript = document.createElement('script');
-    threeScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
-    threeScript.async = true;
-    threeScript.onerror = heroReady;
-    threeScript.onload = function() {
-      if (typeof THREE === 'undefined') { heroReady(); return; }
-      buildParticles();
-    };
-    document.head.appendChild(threeScript);
-
-    function buildParticles() {
-    var scene, camera, renderer, particles, geometryCopy, planeArea;
-    var mouse = new THREE.Vector2(-200, 200);
-    var raycaster = new THREE.Raycaster();
-    var colorChange = new THREE.Color();
-    var buttom = false;
-    var ease = 0.05;
-    var area = 250;
-
-    var data = {
-      text: 'NAPLES\nGOLD BUYERS',
-      amount: 800,
-      particleSize: 1,
-      textSize: 7,
-    };
-
-    function init(font, particleImg) {
-      scene = new THREE.Scene();
-      camera = new THREE.PerspectiveCamera(65, container.clientWidth / container.clientHeight, 1, 10000);
-      camera.position.set(0, 0, 100);
-      renderer = new THREE.WebGLRenderer({ alpha: true });
-      renderer.setClearColor(0x000000, 0);
-      renderer.setSize(container.clientWidth, container.clientHeight);
-      renderer.setPixelRatio(1);
-      container.appendChild(renderer.domElement);
-
-      var geo = new THREE.PlaneGeometry(visibleWidthAtZ(100), visibleHeightAtZ(100));
-      var mat = new THREE.MeshBasicMaterial({ transparent: true });
-      planeArea = new THREE.Mesh(geo, mat);
-      planeArea.visible = false;
-      scene.add(planeArea);
-
-      createText(font, particleImg);
-      positionAnnotation();
-
-      var mouseInHero = false;
-      container.addEventListener('mouseenter', function() { mouseInHero = true; });
-      container.addEventListener('mouseleave', function() { mouseInHero = false; mouse.set(-200, 200); });
-      document.addEventListener('mousemove', function(e) {
-        if (!mouseInHero) return;
-        var rect = container.getBoundingClientRect();
-        mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-        mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-      });
-      document.addEventListener('mousedown', function() { if (mouseInHero) { buttom = true; ease = 0.01; } });
-      document.addEventListener('mouseup', function() { buttom = false; ease = 0.05; });
-      window.addEventListener('resize', function() {
-        camera.aspect = container.clientWidth / container.clientHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(container.clientWidth, container.clientHeight);
-        positionAnnotation();
-      });
-
-      var lastFrameTime = 0;
-      renderer.setAnimationLoop(function(now) {
-        if (now - lastFrameTime < 32) return;
-        lastFrameTime = now;
-        render(mouseInHero);
-      });
-    }
-
-    function render(doRaycast) {
-      var time = ((.001 * performance.now()) % 12) / 12;
-      var zigzagTime = (1 + Math.sin(time * 2 * Math.PI)) / 6;
-
-      var pos = particles.geometry.attributes.position;
-      var copy = geometryCopy.attributes.position;
-      var coulors = particles.geometry.attributes.customColor;
-      var size = particles.geometry.attributes.size;
-
-      // Only raycast when mouse is inside the hero; otherwise lerp-to-home still runs below
-      var hasHit = false, mx, my, mz;
-      if (doRaycast) {
-        raycaster.setFromCamera(mouse, camera);
-        var intersects = raycaster.intersectObject(planeArea);
-        if (intersects.length > 0) {
-          hasHit = true;
-          mx = intersects[0].point.x;
-          my = intersects[0].point.y;
-          mz = intersects[0].point.z;
-        }
-      }
-
-      for (var i = 0, l = pos.count; i < l; i++) {
-        var initX = copy.getX(i), initY = copy.getY(i), initZ = copy.getZ(i);
-        var px = pos.getX(i), py = pos.getY(i), pz = pos.getZ(i);
-
-        if (hasHit) {
-          colorChange.setHSL(0.5, 1, 1);
-          coulors.setXYZ(i, colorChange.r, colorChange.g, colorChange.b);
-          coulors.needsUpdate = true;
-          size.array[i] = data.particleSize;
-          size.needsUpdate = true;
-          var dx = mx - px, dy = my - py;
-          var d = dx * dx + dy * dy;
-          var f = -area / d;
-          if (buttom) {
-            var t = Math.atan2(dy, dx);
-            px -= f * Math.cos(t);
-            py -= f * Math.sin(t);
-            colorChange.setHSL(0.5 + zigzagTime, 1.0, 0.5);
-            coulors.setXYZ(i, colorChange.r, colorChange.g, colorChange.b);
-            coulors.needsUpdate = true;
-            if (Math.abs(px - initX) > 70 || Math.abs(py - initY) > 70) {
-              colorChange.setHSL(0.12, 1.0, 0.5);
-              coulors.setXYZ(i, colorChange.r, colorChange.g, colorChange.b);
-              coulors.needsUpdate = true;
-            }
-          } else {
-            var mouseDistance = Math.sqrt(dx * dx + dy * dy);
-            if (mouseDistance < area) {
-              if (i % 5 === 0) {
-                var t2 = Math.atan2(dy, dx);
-                px -= 0.03 * Math.cos(t2);
-                py -= 0.03 * Math.sin(t2);
-                colorChange.setHSL(0.12, 1.0, 0.5);
-                coulors.setXYZ(i, colorChange.r, colorChange.g, colorChange.b);
-                coulors.needsUpdate = true;
-                size.array[i] = data.particleSize / 1.2;
-                size.needsUpdate = true;
-              } else {
-                var t3 = Math.atan2(dy, dx);
-                px += f * Math.cos(t3);
-                py += f * Math.sin(t3);
-                pos.setXYZ(i, px, py, pz);
-                pos.needsUpdate = true;
-                size.array[i] = data.particleSize * 1.3;
-                size.needsUpdate = true;
-              }
-              if (Math.abs(px - initX) > 10 || Math.abs(py - initY) > 10) {
-                colorChange.setHSL(0.12, 1.0, 0.5);
-                coulors.setXYZ(i, colorChange.r, colorChange.g, colorChange.b);
-                coulors.needsUpdate = true;
-                size.array[i] = data.particleSize / 1.8;
-                size.needsUpdate = true;
-              }
-            }
-          }
-        }
-
-        // Always lerp every particle toward its home position — runs even when
-        // the mouse is outside the hero or has left the window entirely
-        px += (initX - px) * ease;
-        py += (initY - py) * ease;
-        pz += (initZ - pz) * ease;
-        pos.setXYZ(i, px, py, pz);
-        pos.needsUpdate = true;
-      }
-
-      renderer.render(scene, camera);
-    }
-
-    function createText(font, particleImg) {
-      var thePoints = [];
-      var shapes = font.generateShapes(data.text, data.textSize);
-      var geometry = new THREE.ShapeGeometry(shapes);
-      geometry.computeBoundingBox();
-      var xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
-      var yMid = (geometry.boundingBox.max.y - geometry.boundingBox.min.y) / 2.85;
-      geometry.center();
-      var holeShapes = [];
-      for (var q = 0; q < shapes.length; q++) {
-        var shape = shapes[q];
-        if (shape.holes && shape.holes.length > 0) {
-          for (var j = 0; j < shape.holes.length; j++) holeShapes.push(shape.holes[j]);
-        }
-      }
-      shapes.push.apply(shapes, holeShapes);
-      var colors = [], sizes = [];
-      for (var x = 0; x < shapes.length; x++) {
-        var s = shapes[x];
-        var amountPoints = s.type === 'Path' ? data.amount / 2 : data.amount;
-        s.getSpacedPoints(amountPoints).forEach(function(el) {
-          thePoints.push(new THREE.Vector3(el.x, el.y, 0));
-          colors.push(colorChange.r, colorChange.g, colorChange.b);
-          sizes.push(1);
-        });
-      }
-      var geoParticles = new THREE.BufferGeometry().setFromPoints(thePoints);
-      geoParticles.translate(xMid, yMid + 36, 0);
-      geoParticles.setAttribute('customColor', new THREE.Float32BufferAttribute(colors, 3));
-      geoParticles.setAttribute('size', new THREE.Float32BufferAttribute(sizes, 1));
-      var material = new THREE.ShaderMaterial({
-        uniforms: {
-          color: { value: new THREE.Color(0xffffff) },
-          pointTexture: { value: particleImg }
-        },
-        vertexShader: document.getElementById('vertexshader').textContent,
-        fragmentShader: document.getElementById('fragmentshader').textContent,
-        blending: THREE.AdditiveBlending,
-        depthTest: false,
-        transparent: true,
-      });
-      particles = new THREE.Points(geoParticles, material);
-      scene.add(particles);
-      geometryCopy = new THREE.BufferGeometry();
-      geometryCopy.copy(particles.geometry);
-    }
-
-    function visibleHeightAtZ(depth) {
-      var cameraOffset = camera.position.z;
-      var d = depth < cameraOffset ? depth - cameraOffset : depth + cameraOffset;
-      return 2 * Math.tan(camera.fov * Math.PI / 360) * Math.abs(d);
-    }
-    function visibleWidthAtZ(depth) { return visibleHeightAtZ(depth) * camera.aspect; }
-
-    var annotEl = document.querySelector('.hero-annotation');
-    function positionAnnotation() {
-      if (!annotEl) return;
-      annotEl.style.top = Math.round(container.clientHeight * 0.178) + 'px';
-    }
-
-    var manager = new THREE.LoadingManager();
-    var loadedFont, loadedTexture;
-    manager.onLoad = function() { init(loadedFont, loadedTexture); heroReady(); };
-    new THREE.FontLoader(manager).load(
-      'https://res.cloudinary.com/dydre7amr/raw/upload/v1612950355/font_zsd4dr.json',
-      function(f) { loadedFont = f; }
-    );
-    loadedTexture = new THREE.TextureLoader(manager).load(
-      'https://res.cloudinary.com/dfvtkoboz/image/upload/v1605013866/particle_a64uzf.png'
-    );
-    }
-  })();
-  </script>
   <!-- LOADER REVEAL -->
   <script>
   (function() {
     var revealed = false;
-    var windowLoaded = false;
-    var heroReady = false;
 
     function reveal() {
       if (revealed) return;
@@ -1886,25 +1527,10 @@
       }
     }
 
-    function checkReveal() {
-      if (windowLoaded && heroReady) setTimeout(reveal, 80);
-    }
-
-    // Signal from particle init (or immediate on mobile/tablet where there are no
-    // particles). The particle script runs BEFORE this one, so on mobile/tablet the
-    // signal may already have fired into the early stub — honor it here.
-    window.__siteHeroReady = function() {
-      heroReady = true;
-      checkReveal();
-    };
-    if (window.__heroReadyFired) window.__siteHeroReady();
-
-    // Reveal as soon as the DOM is parsed + the hero is ready — don't wait on the
-    // full window 'load' (which blocks on the heaviest/last resource, e.g. fonts,
-    // three.js on desktop, images). Content + background appear together.
+    // Reveal as soon as the DOM is parsed — don't wait on the full window 'load'
+    // (which blocks on the heaviest/last resource, e.g. fonts, images).
     function markDomReady() {
-      windowLoaded = true;
-      checkReveal();
+      setTimeout(reveal, 80);
     }
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', markDomReady);
