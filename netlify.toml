@@ -39,8 +39,17 @@
   status = 301
   force = true
 
-# Common misspelling of the Spanish page, kept on this domain.
+# The main site carries a full Spanish mirror (98 /es/ URLs, including
+# /es/sell/<city>), so the Spanish page here would compete with it. Same
+# consolidation as the city pages above.
+[[redirects]]
+  from = "/vender-oro-naples/*"
+  to = "https://naplesestatejewelry.com/es/sell/naples"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/vender-oro/*"
-  to = "/vender-oro-naples/"
+  to = "https://naplesestatejewelry.com/es/sell/naples"
   status = 301
+  force = true
