@@ -6,7 +6,6 @@
 
   <title>Naples Gold Buyers | Naples' Top Gold, Silver &amp; Jewelry Buyers</title>
   <meta name="description" content="Naples Gold Buyers pays top dollar for gold, silver, coins, and estate jewelry. Fast and honest — we come to you anywhere in Naples. Send photos for a free offer or call (239) 404-8505." />
-  <meta name="keywords" content="gold buyer naples fl, sell gold naples florida, silver buyer naples, coin buyer naples fl, estate jewelry buyer naples, sell jewelry naples, gold buyer marco island, gold buyer bonita springs, gold buyer estero fl, gold buyer fort myers, gold buyer cape coral, sell gold collier county, sell gold lee county, mobile gold buyer southwest florida, cash for gold naples" />
   <meta name="geo.region"    content="US-FL" />
   <meta name="geo.placename" content="Naples, FL" />
   <meta name="geo.position"  content="26.1420;-81.7948" />
@@ -35,24 +34,31 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "Naples Gold Buyers",
-    "description": "Mobile gold, silver, coin, and estate jewelry buying service serving Naples and all of Southwest Florida. We come to you for fast, honest offers.",
-    "url": "https://NaplesGoldBuyers.com",
+    "@type": "JewelryStore",
+    "@id": "https://naplesestatejewelry.com/#business",
+    "name": "Naples Estate Jewelry",
+    "alternateName": "Naples Gold Buyers",
+    "description": "Gold, silver, coin, and estate jewelry buyer with a showroom in North Naples, serving Naples and all of Southwest Florida. Visit the showroom or we come to you for fast, honest offers.",
+    "url": "https://naplesestatejewelry.com",
     "telephone": "+12394048505",
+    "email": "info@naplesestatejewelry.com",
     "priceRange": "$$",
     "image": "https://NaplesGoldBuyers.com/og-image.png",
     "address": {
       "@type": "PostalAddress",
+      "streetAddress": "6240 Shirley St Ste 104",
       "addressLocality": "Naples",
       "addressRegion": "FL",
+      "postalCode": "34109",
       "addressCountry": "US"
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": 26.1420,
-      "longitude": -81.7948
+      "latitude": 26.2220815,
+      "longitude": -81.7813128
     },
+    "currenciesAccepted": "USD",
+    "paymentAccepted": "Cash, Check",
     "areaServed": [
       { "@type": "City", "name": "Naples, FL" },
       { "@type": "City", "name": "Marco Island, FL" },
@@ -84,7 +90,8 @@
       "availableLanguage": "English"
     },
     "sameAs": [
-      "https://NaplesGoldBuyers.com"
+      "https://naplesestatejewelry.com",
+      "https://maps.google.com/?cid=17050430560749692864"
     ]
   }
   </script>
@@ -98,8 +105,10 @@
   <!-- Third-party origins used by the desktop particle title (loaded on demand) -->
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
   <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
-  <!-- Hero logo is the LCP on mobile/tablet — prioritize it; skip the fetch on desktop where it's hidden -->
-  <link rel="preload" as="image" href="logo.webp" type="image/webp" media="(max-width: 1024px)" fetchpriority="high" />
+  <!-- Hero logo is the LCP element at every viewport — preload the same candidate the <img> will choose -->
+  <link rel="preload" as="image" href="logo-768.webp" type="image/webp"
+        imagesrcset="logo-512.webp 512w, logo-768.webp 768w, logo.webp 1024w"
+        imagesizes="(max-width: 600px) 75vw, (max-width: 871px) 70vw, 610px" fetchpriority="high" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
 
   <style>
@@ -992,9 +1001,13 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-logo-wrap">
-      <img class="hero-logo" src="logo.webp" width="1024" height="1024" alt="" fetchpriority="high" decoding="async" loading="lazy" />
+      <img class="hero-logo"
+           src="logo-768.webp"
+           srcset="logo-512.webp 512w, logo-768.webp 768w, logo.webp 1024w"
+           sizes="(max-width: 600px) 75vw, (max-width: 871px) 70vw, 610px"
+           width="1024" height="1024" alt="" fetchpriority="high" decoding="async" />
     </div>
-    <h1 class="sr-only">Naples Gold Buyers</h1>
+    <h1 class="sr-only">Naples Gold Buyers — Sell Gold, Silver, Coins and Estate Jewelry in Naples, Florida</h1>
     <p class="hero-portal-label">Photo Upload Portal</p>
     <div class="container" style="position:relative;z-index:3;padding-bottom:60px;">
       <div class="hero-content">
@@ -1067,15 +1080,15 @@
         </div>
 
         <div class="hero-cta" style="margin-top:22px;">
-          <a href="https://naplesestatejewelry.co/shop" target="_blank" rel="noopener" class="btn btn-gold">Visit Our Store</a>
+          <a href="https://naplesestatejewelry.com" target="_blank" rel="noopener" class="btn btn-gold">Visit Our Store</a>
         </div>
         <div class="hero-cross-sell" style="margin-top:48px;padding-top:40px;border-top:1px solid rgba(255,255,255,0.12);">
           <p style="font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold-light);margin-bottom:10px;">Want to buy or trade instead?</p>
           <p style="font-size:15px;color:rgba(255,255,255,0.65);margin-bottom:24px;line-height:1.6;">Get special pricing when you sell us jewelry and shop with store credit.</p>
-          <a href="https://www.NaplesEstateJewelry.co" target="_blank" rel="noopener"
+          <a href="https://naplesestatejewelry.com" target="_blank" rel="noopener"
              class="btn btn-store hero-cross-sell-btn"
              style="display:inline-block;padding:22px 56px;font-size:18px;letter-spacing:1.5px;">
-            Visit the Naples Estate Jewelry Co Shop &nbsp;&rarr;
+            Visit the Naples Estate Jewelry Shop &nbsp;&rarr;
           </a>
         </div>
       </div>
@@ -1124,7 +1137,16 @@
     <div class="container">
       <p class="section-label">What We Buy</p>
       <h2 class="section-title">We Purchase a Wide Range<br />of Precious Items</h2>
-      <p style="font-size:13px;color:rgba(255,255,255,0.40);margin-top:-10px;margin-bottom:4px;letter-spacing:.3px;">Serving Naples, Marco Island, Fort Myers, Cape Coral, Bonita Springs, Estero &amp; all of Southwest Florida</p>
+      <p style="font-size:13px;color:rgba(255,255,255,0.40);margin-top:-10px;margin-bottom:4px;letter-spacing:.3px;">Serving
+        <a href="https://naplesestatejewelry.com/sell/naples" style="color:var(--gold-light);text-decoration:none;">Naples</a>,
+        <a href="https://naplesestatejewelry.com/sell/marco-island" style="color:var(--gold-light);text-decoration:none;">Marco Island</a>,
+        <a href="https://naplesestatejewelry.com/sell/fort-myers" style="color:var(--gold-light);text-decoration:none;">Fort Myers</a>,
+        Cape Coral,
+        <a href="https://naplesestatejewelry.com/sell/bonita-springs" style="color:var(--gold-light);text-decoration:none;">Bonita Springs</a>,
+        Estero &amp; all of Southwest Florida
+        &nbsp;&bull;&nbsp;
+        <a href="/vender-oro-naples/" hreflang="es" lang="es" style="color:var(--gold-light);text-decoration:none;">Hablamos espa&ntilde;ol</a>
+      </p>
       <div class="divider"></div>
       <div class="items-grid">
         <div class="item-card">
@@ -1218,7 +1240,7 @@
       <p class="cta-note">Call or text anytime — we'll schedule a free, no-obligation visit at your convenience</p>
       <a href="tel:+12394048505" class="btn btn-gold" style="font-size:16px;padding:18px 48px;">Call or Text Now &rarr;</a>
       <div style="margin-top:14px;">
-        <a href="https://naplesestatejewelry.co/shop" target="_blank" rel="noopener" class="btn btn-store" style="font-size:15px;padding:14px 40px;">Visit Our Store</a>
+        <a href="https://naplesestatejewelry.com" target="_blank" rel="noopener" class="btn btn-store" style="font-size:15px;padding:14px 40px;">Visit Our Store</a>
       </div>
       <p style="color:rgba(255,255,255,0.35);font-size:13px;margin-top:24px;">Serving Naples, Marco Island, Bonita Springs, Fort Myers, Cape Coral, Estero &amp; all of Collier and Lee Counties</p>
     </div>
@@ -1227,14 +1249,27 @@
   <!-- FOOTER -->
   <footer>
     <span class="footer-logo">Naples <span>Gold Buyers</span></span>
-    <p>Licensed &bull; Professional &bull; Local &bull; Mobile Service &bull; Southwest Florida</p>
-    <p style="margin-top:6px;font-size:12px;">Naples &bull; Marco Island &bull; Bonita Springs &bull; Fort Myers &bull; Cape Coral &bull; Estero &bull; Collier &amp; Lee Counties</p>
-    <p style="margin-top:8px;">
+    <p>Licensed &bull; Professional &bull; Local &bull; Showroom &amp; Mobile Service &bull; Southwest Florida</p>
+
+    <address style="font-style:normal;margin-top:14px;color:rgba(255,255,255,0.55);">
+      A service of <a href="https://naplesestatejewelry.com">Naples Estate Jewelry</a><br />
+      6240 Shirley St, Ste 104, Naples, FL 34109<br />
       <a href="tel:+12394048505">(239) 404-8505</a>
       &nbsp;&bull;&nbsp;
-      <a href="https://www.NaplesGoldBuyers.com">NaplesGoldBuyers.com</a>
+      <a href="mailto:info@naplesestatejewelry.com">info@naplesestatejewelry.com</a><br />
+      <a href="https://naplesestatejewelry.com/contact" rel="noopener">Showroom hours &amp; directions</a>
+    </address>
+
+    <p style="margin-top:16px;font-size:12px;">
+      <a href="https://naplesestatejewelry.com/sell/naples">Sell Gold in Naples</a>
+      &nbsp;&bull;&nbsp;<a href="https://naplesestatejewelry.com/sell/marco-island">Marco Island</a>
+      &nbsp;&bull;&nbsp;<a href="https://naplesestatejewelry.com/sell/bonita-springs">Bonita Springs</a>
+      &nbsp;&bull;&nbsp;<a href="https://naplesestatejewelry.com/sell/fort-myers">Fort Myers</a>
+      &nbsp;&bull;&nbsp;<a href="/vender-oro-naples/" hreflang="es" lang="es">En espa&ntilde;ol</a>
     </p>
-    <p style="margin-top:16px;">&copy; 2025 Naples Gold Buyers. All rights reserved.</p>
+
+    <p style="margin-top:10px;font-size:12px;">Naples &bull; Marco Island &bull; Bonita Springs &bull; Fort Myers &bull; Cape Coral &bull; Estero &bull; Collier &amp; Lee Counties</p>
+    <p style="margin-top:16px;">&copy; 2026 Naples Estate Jewelry. All rights reserved.</p>
   </footer>
 
   <!-- MOBILE STICKY CALL BAR -->

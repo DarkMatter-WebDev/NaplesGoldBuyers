@@ -7,3 +7,40 @@
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+# ── City pages: consolidated onto the main site ─────────────────────────────
+# naplesestatejewelry.com already has /sell/<city> pages covering these exact
+# queries. Running a second set here would put two sites we own in the same
+# search results, so these 301 to the main site's equivalents instead.
+# The source files are kept in the repo (shadowed by force = true) so this is
+# a one-line revert per page if we ever want them standalone again.
+
+[[redirects]]
+  from = "/sell-gold-naples/*"
+  to = "https://naplesestatejewelry.com/sell/naples"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/sell-gold-marco-island/*"
+  to = "https://naplesestatejewelry.com/sell/marco-island"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/sell-gold-bonita-springs/*"
+  to = "https://naplesestatejewelry.com/sell/bonita-springs"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/sell-gold-fort-myers/*"
+  to = "https://naplesestatejewelry.com/sell/fort-myers"
+  status = 301
+  force = true
+
+# Common misspelling of the Spanish page, kept on this domain.
+[[redirects]]
+  from = "/vender-oro/*"
+  to = "/vender-oro-naples/"
+  status = 301

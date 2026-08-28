@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Internal tools — crawlable so the noindex tag is seen, but not for search results.
+# (Do not Disallow these: a blocked page can never be read, so its noindex never applies.)
+
+Sitemap: https://NaplesGoldBuyers.com/sitemap.xml
