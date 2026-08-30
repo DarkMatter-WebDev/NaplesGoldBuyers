@@ -126,7 +126,7 @@
       --border:     #DDDAD4;
     }
 
-    html { background: #0d0d10; will-change: scroll-position; }
+    html { background: #0d0d10; will-change: scroll-position; scroll-behavior: smooth; }
 
     body {
       font-family: 'Lato', sans-serif;
@@ -346,18 +346,21 @@
     }
     .hero h1 {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(36px, 6vw, 66px);
+      font-size: clamp(28px, 4.4vw, 46px);
       font-weight: 700;
       color: #fff;
-      line-height: 1.15;
-      margin-bottom: 24px;
+      line-height: 1.25;
+      margin: 18px auto 18px;
+      max-width: 760px;
+      text-align: center;
+      text-shadow: 0 2px 16px rgba(0,0,0,0.6);
     }
     .hero h1 em { font-style: normal; color: var(--gold-light); }
     .hero-sub {
       font-size: clamp(15px, 2.2vw, 18px);
       color: rgba(255,255,255,0.80);
       margin-top: 10px;
-      margin-bottom: 36px;
+      margin-bottom: 28px;
       line-height: 1.7;
       text-align: center;
       max-width: 600px;
@@ -365,19 +368,61 @@
       margin-right: auto;
       overflow-wrap: break-word;
     }
-    .hero-portal-label {
-      position: static;
-      z-index: 3;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--gold-light);
-      text-align: center;
-      margin-top: -6px;
-      margin-bottom: 10px;
-      text-shadow: 0 2px 14px rgba(0,0,0,0.75);
+    /* ── HERO TRUST ROW ── */
+    .hero-trust-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin: 0 0 32px;
     }
+    .trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      color: rgba(255,255,255,0.85);
+      background: rgba(255,255,255,0.03);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    a.trust-pill:hover { border-color: var(--gold-light); color: #fff; }
+    /* ── HERO "HOW IT WORKS" STEPS ── */
+    .hero-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 0 0 36px;
+      text-align: left;
+    }
+    .hero-step {
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      padding: 20px 18px;
+    }
+    .hero-step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: rgba(226,184,74,0.14);
+      border: 1px solid rgba(226,184,74,0.4);
+      color: var(--gold-light);
+      font-size: 13px; font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .hero-step h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px; font-weight: 600; color: #fff;
+      margin-bottom: 6px;
+    }
+    .hero-step p { font-size: 13px; color: rgba(255,255,255,0.62); line-height: 1.55; }
     .hero-cta {
       display: flex;
       flex-wrap: wrap;
@@ -809,9 +854,7 @@
 
     /* ── LOGO HERO SPACING (601px and up) ── */
     @media (min-width: 601px) {
-      /* Pull the portal label + everything below it up and tighten under the logo */
-      .hero-portal-label { margin-top: -28px; }
-      .hero-sub { margin-top: 22px; }
+      .hero-sub { margin-top: 20px; }
     }
 
 
@@ -835,17 +878,13 @@
       .hero-logo-wrap { padding: 0 12px; }
       .hero-logo { width: min(641px, 75vw); }
 
-      .hero-portal-label { font-size: 11px; letter-spacing: 2px; margin-bottom: 2px; }
-      .hero-sub { font-size: 15px; margin-bottom: 4px; max-width: 320px; margin-left: auto; margin-right: auto; }
+      .hero-sub { font-size: 15px; margin-bottom: 18px; max-width: 360px; margin-left: auto; margin-right: auto; }
+      .hero-trust-row { margin-bottom: 20px; gap: 8px; }
+      .trust-pill { font-size: 11px; padding: 7px 12px; }
+      .hero-steps { grid-template-columns: 1fr; gap: 10px; margin-bottom: 26px; }
+      .hero-step { padding: 16px 14px; }
       .camera-choice { margin-top: 14px; }
       .btn-camera { min-width: 174px; padding: 13px 24px; font-size: 13px; }
-
-      /* Collapse the label/divider above upload box — redundant in hero context */
-      #get-estimate { margin-top: 4px !important; }
-      #get-estimate > .section-label,
-      #get-estimate > .divider { display: none; }
-      #get-estimate form { margin-top: 0; }
-      #uploadActions { display: none; }
 
       /* CTA buttons — full-width stacked */
       .hero-cta { flex-direction: column; gap: 12px; }
@@ -1007,80 +1046,39 @@
            sizes="(max-width: 600px) 75vw, (max-width: 871px) 70vw, 610px"
            width="1024" height="1024" alt="" fetchpriority="high" decoding="async" />
     </div>
-    <h1 class="sr-only">Naples Gold Buyers — Sell Gold, Silver, Coins and Estate Jewelry in Naples, Florida</h1>
-    <p class="hero-portal-label">Photo Upload Portal</p>
+    <h1>Naples' <em>Trusted</em> Name in Gold, Silver &amp; Estate Jewelry</h1>
     <div class="container" style="position:relative;z-index:3;padding-bottom:60px;">
       <div class="hero-content">
-        <p class="hero-sub" style="text-shadow:0 2px 16px rgba(0,0,0,0.9);">Send photos below for a fast, honest offer on your gold, silver, coins, and estate jewelry.</p>
-        <!-- INLINE PHOTO ESTIMATE -->
-        <div id="get-estimate" style="margin-top:32px;">
-          <form id="estimateForm" name="estimate-request" method="POST"
-                enctype="multipart/form-data" data-netlify="true"
-                netlify-honeypot="bot-field">
+        <p class="hero-sub" style="text-shadow:0 2px 16px rgba(0,0,0,0.9);">We buy gold, silver, coins, diamonds, watches, and full estates — testing and weighing everything transparently in front of you for an honest, on-the-spot offer. Visit our North Naples showroom, or we'll come to you anywhere in Collier or Lee County.</p>
 
-            <input type="hidden" name="form-name" value="estimate-request">
-            <p hidden><label>Don't fill this out: <input name="bot-field"></label></p>
+        <div class="hero-trust-row">
+          <a href="https://maps.google.com/?cid=17050430560749692864" target="_blank" rel="noopener" class="trust-pill">&#9733; 5.0 on Google</a>
+          <span class="trust-pill">Licensed &amp; Local</span>
+          <span class="trust-pill">Showroom + Home Visits</span>
+          <span class="trust-pill">Serving All of SWFL</span>
+        </div>
 
-            <div class="upload-zone" id="uploadZone">
-              <input class="upload-file-input" type="file" name="photos"
-                     id="photoInput" accept="image/*" multiple
-                     aria-label="Select photos of your items" />
-              <div class="upload-prompt" id="uploadPrompt">
-                <div class="upload-icon-wrap">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
-                    <polyline points="21 15 16 10 5 21"/>
-                  </svg>
-                </div>
-                <p class="upload-drag-title">
-                  <span class="hide-mobile">Drag photos here</span>
-                  <span class="show-mobile">Choose photos to send</span>
-                </p>
-                <p class="upload-drag-hint">
-                  <span class="hide-mobile">or tap to choose from your camera roll</span>
-                  <span class="show-mobile">Tap to select from your camera roll</span>
-                </p>
-                <span class="upload-tap-btn">Choose Photos</span>
-              </div>
-              <div class="upload-previews" id="uploadPreviews"></div>
-            </div>
-            <div class="camera-choice" id="cameraChoice">
-              <div class="camera-choice-or">or</div>
-              <button type="button" class="btn btn-camera" id="takePhotosBtn">Take Photos</button>
-              <input class="camera-file-input" type="file" id="cameraInput" accept="image/*" capture="environment" multiple aria-hidden="true" tabindex="-1" />
-            </div>
-
-            <p class="upload-count-label" id="uploadCount" style="display:none;margin-top:16px;text-align:center;"></p>
-
-            <!-- Hidden fields so Netlify scans them at deploy time -->
-            <input type="hidden" name="name" id="formName" value="">
-            <input type="hidden" name="phone" id="formPhone" value="">
-            <input type="hidden" name="grams" id="formGrams" value="">
-            <input type="hidden" name="item_type" id="formType" value="">
-            <input type="hidden" name="notes" id="formNotes" value="">
-
-            <div id="uploadActions" style="margin-top:24px;text-align:center;display:none;">
-              <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
-                <button type="submit" class="btn btn-gold" id="submitBtn">
-                  Send
-                </button>
-                <button type="button" class="btn btn-outline" id="clearPhotosBtn"
-                        style="display:none;padding:16px 24px;">Clear Photos</button>
-              </div>
-            </div>
-          </form>
-
-          <div class="upload-success" id="uploadSuccess">
-            <div class="upload-success-icon">&#10003;</div>
-            <p class="section-label" style="color:var(--gold-light);">Got it!</p>
-            <h3 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:600;color:#fff;margin-bottom:12px;">Photos Received</h3>
-            <p style="color:rgba(255,255,255,0.62);font-size:16px;max-width:400px;margin:0 auto 28px;line-height:1.7;">We'll review your items and reach out as soon as we can. For a faster response, give us a call.</p>
-            <button type="button" class="btn btn-gold" onclick="window.location.reload()">Submit More Photos</button>
+        <div class="hero-steps">
+          <div class="hero-step">
+            <div class="hero-step-num">1</div>
+            <h4>Reach Out</h4>
+            <p>Call, text, or send a few photos of what you're looking to sell.</p>
+          </div>
+          <div class="hero-step">
+            <div class="hero-step-num">2</div>
+            <h4>Get Evaluated</h4>
+            <p>We test and weigh everything transparently, in person or from your photos.</p>
+          </div>
+          <div class="hero-step">
+            <div class="hero-step-num">3</div>
+            <h4>Get Paid</h4>
+            <p>Accept our offer and walk away with cash — no obligation, no pressure.</p>
           </div>
         </div>
 
-        <div class="hero-cta" style="margin-top:22px;">
-          <a href="https://naplesestatejewelry.com" target="_blank" rel="noopener" class="btn btn-gold">Visit Our Store</a>
+        <div class="hero-cta">
+          <a href="tel:+12394048505" class="btn btn-gold">Call or Text (239) 404-8505</a>
+          <a href="#get-estimate" class="btn btn-outline">Get a Photo Estimate</a>
         </div>
         <div class="hero-cross-sell" style="margin-top:48px;padding-top:40px;border-top:1px solid rgba(255,255,255,0.12);">
           <p style="font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold-light);margin-bottom:10px;">Want to buy or trade instead?</p>
@@ -1191,6 +1189,81 @@
           <span class="item-icon">🏛️</span>
           <h3>Estate Jewelry</h3>
           <p>Victorian, Edwardian, Art Deco, and Mid-Century pieces. Complete estates purchased.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GET A PHOTO ESTIMATE -->
+  <section class="section section-alt" id="get-estimate" style="scroll-margin-top:84px;">
+    <div class="container">
+      <p class="section-label">Free Photo Estimate</p>
+      <h2 class="section-title">Send Photos, Get a Fast Response</h2>
+      <p class="section-sub">Prefer not to call first? Snap a few photos of your gold, silver, coins, or jewelry and send them our way — no appointment necessary to get started.</p>
+      <div class="divider"></div>
+      <div style="max-width:640px;">
+        <form id="estimateForm" name="estimate-request" method="POST"
+              enctype="multipart/form-data" data-netlify="true"
+              netlify-honeypot="bot-field">
+
+          <input type="hidden" name="form-name" value="estimate-request">
+          <p hidden><label>Don't fill this out: <input name="bot-field"></label></p>
+
+          <div class="upload-zone" id="uploadZone">
+            <input class="upload-file-input" type="file" name="photos"
+                   id="photoInput" accept="image/*" multiple
+                   aria-label="Select photos of your items" />
+            <div class="upload-prompt" id="uploadPrompt">
+              <div class="upload-icon-wrap">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+                  <polyline points="21 15 16 10 5 21"/>
+                </svg>
+              </div>
+              <p class="upload-drag-title">
+                <span class="hide-mobile">Drag photos here</span>
+                <span class="show-mobile">Choose photos to send</span>
+              </p>
+              <p class="upload-drag-hint">
+                <span class="hide-mobile">or tap to choose from your camera roll</span>
+                <span class="show-mobile">Tap to select from your camera roll</span>
+              </p>
+              <span class="upload-tap-btn">Choose Photos</span>
+            </div>
+            <div class="upload-previews" id="uploadPreviews"></div>
+          </div>
+          <div class="camera-choice" id="cameraChoice">
+            <div class="camera-choice-or">or</div>
+            <button type="button" class="btn btn-camera" id="takePhotosBtn">Take Photos</button>
+            <input class="camera-file-input" type="file" id="cameraInput" accept="image/*" capture="environment" multiple aria-hidden="true" tabindex="-1" />
+          </div>
+
+          <p class="upload-count-label" id="uploadCount" style="display:none;margin-top:16px;text-align:center;"></p>
+
+          <!-- Hidden fields so Netlify scans them at deploy time -->
+          <input type="hidden" name="name" id="formName" value="">
+          <input type="hidden" name="phone" id="formPhone" value="">
+          <input type="hidden" name="grams" id="formGrams" value="">
+          <input type="hidden" name="item_type" id="formType" value="">
+          <input type="hidden" name="notes" id="formNotes" value="">
+
+          <div id="uploadActions" style="margin-top:24px;text-align:center;display:none;">
+            <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
+              <button type="submit" class="btn btn-gold" id="submitBtn">
+                Send
+              </button>
+              <button type="button" class="btn btn-outline" id="clearPhotosBtn"
+                      style="display:none;padding:16px 24px;">Clear Photos</button>
+            </div>
+          </div>
+        </form>
+
+        <div class="upload-success" id="uploadSuccess">
+          <div class="upload-success-icon">&#10003;</div>
+          <p class="section-label" style="color:var(--gold-light);">Got it!</p>
+          <h3 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:600;color:#fff;margin-bottom:12px;">Photos Received</h3>
+          <p style="color:rgba(255,255,255,0.62);font-size:16px;max-width:400px;margin:0 auto 28px;line-height:1.7;">We'll review your items and reach out as soon as we can. For a faster response, give us a call.</p>
+          <button type="button" class="btn btn-gold" onclick="window.location.reload()">Submit More Photos</button>
         </div>
       </div>
     </div>

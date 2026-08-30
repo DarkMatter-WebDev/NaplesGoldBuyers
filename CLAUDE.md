@@ -31,8 +31,9 @@ styles.css              Shared stylesheet for the sub-pages. No WebGL — these 
 sunscroll.js            Raw WebGL fragment shader for index.html's background.
 logo.webp               1024px. logo-512 / logo-768 are the srcset variants.
 og-image.png            1200x630, 256-colour quantised (~101 KB).
-netlify.toml            publish + security headers + all six 301s.
+netlify.toml            publish + security headers + 10 redirects (see Redirects below).
 robots.txt / sitemap.xml
+CLAUDE.md               This file. Blocked from public serving by a 404 rule.
 sell-gold-*/            Four city pages. SHADOWED by forced redirects — not live.
 vender-oro-naples/      Spanish page. SHADOWED by a forced redirect — not live.
 logo-animated.html      Internal tools. Both carry noindex.
@@ -76,14 +77,32 @@ does, improve that page instead.**
 python -m http.server 3333
 ```
 
-`.claude/launch.json` defines this. **Netlify redirects do not run under it** — the six 301s can
-only be verified against the deployed site.
+`.claude/launch.json` defines this. See Redirects above for what local dev cannot test.
+
+## Redirects
+
+`netlify.toml` holds 10 rules, all `force = true`:
+
+- **6 content redirects** — the four `/sell-gold-<city>/` paths to `naplesestatejewelry.com/sell/<city>`,
+  and `/vender-oro-naples/` + `/vender-oro/` to `naplesestatejewelry.com/es/sell/naples`.
+- **4 blocking rules** — `/CLAUDE.md`, `/package.json`, `/package-lock.json`, `/netlify.toml` return
+  **404**. `publish = "."` serves the whole directory, so without these this file would be public.
+  They return the homepage as the 404 *body* (verified to contain none of this file's content). Add
+  a `404.html` and repoint them if you want a proper error page.
+
+**Netlify redirects do not run under the local Python server.** They can only be verified against
+the deployed site.
 
 ## Post-deploy checks
 
-1. Click one city redirect and the Spanish redirect (`/vender-oro-naples/`) to confirm they 301.
-2. Confirm www and http still fold into `https://naplesgoldbuyers.com`.
-3. Search Console: property `sc-domain:naplesgoldbuyers.com` (verified 2026-08-29, DNS TXT).
+Last verified **2026-08-29**, all passing:
+
+1. Each `/sell-gold-<city>/` 301s to the matching `/sell/<city>`.
+2. `/vender-oro-naples/` and `/vender-oro/` 301 to `/es/sell/naples`.
+3. `/CLAUDE.md` and the other three internal paths return 404, body contains none of their content.
+4. `www.` and `http://` both fold into `https://naplesgoldbuyers.com`.
+5. Search Console: `sc-domain:naplesgoldbuyers.com` verified via DNS TXT, sitemap status Success,
+   homepage indexed.
 
 ## Where the real wins are
 
