@@ -3,6 +3,21 @@
 Static site on Netlify (`publish = "."`). **Deliberately one indexable page.** Everything else
 301s to `naplesestatejewelry.com`. Read the "Why this is one page" section before adding anything.
 
+## Agent scope boundary
+
+**This project and Naples Estate Jewelry are worked on by separate agent sessions**, even though
+this site exists purely to fund traffic to that business. Keep them separate:
+
+- **In scope here:** naplesgoldbuyers.com's own code, content, technical SEO, and its own Search
+  Console property (`sc-domain:naplesgoldbuyers.com`).
+- **Out of scope here — owned by the Naples Estate Jewelry agent:** anything on
+  naplesestatejewelry.com itself, the Google Business Profile, review growth, opening hours,
+  Google Ads spend, or other business-operations decisions. Don't recommend or act on these from
+  this project. The "Where the real wins are" section below is background on *why* this repo has
+  a low ceiling — it is not a to-do list for this agent.
+- Linking *to* naplesestatejewelry.com from here is fine and intentional — that's the entire
+  point of the funnel. The boundary is about not doing work *on* that other site or business.
+
 ## The business
 
 This domain is a marketing funnel for **Naples Estate Jewelry** — it is not a separate business.
@@ -25,12 +40,17 @@ network is a real local-SEO negative.
 ## Layout
 
 ```
-index.html              The only indexable page. Photo-upload lead portal (Netlify form
-                        "estimate-request"), WebGL background, full service coverage.
+index.html              The only indexable page. Trust/explainer hero (what we buy, how it
+                        works, why we're trusted) with the photo-upload lead portal (Netlify
+                        form "estimate-request") relocated to its own section further down.
+                        WebGL background, full service coverage.
 styles.css              Shared stylesheet for the sub-pages. No WebGL — these must stay fast.
 sunscroll.js            Raw WebGL fragment shader for index.html's background.
 logo.webp               1024px. logo-512 / logo-768 are the srcset variants.
-og-image.png            1200x630, 256-colour quantised (~101 KB).
+og-image.png            1200x630, 256-colour quantised (~101 KB). Static branding, not tied to
+                        hero copy — regenerate via og-image-generator.html if the tagline changes.
+favicon.ico / favicon-32x32.png / favicon-16x16.png / apple-touch-icon.png
+                        Generated from logo.webp (see below). Referenced in index.html's <head>.
 netlify.toml            publish + security headers + 10 redirects (see Redirects below).
 robots.txt / sitemap.xml
 CLAUDE.md               This file. Blocked from public serving by a 404 rule.
@@ -38,6 +58,22 @@ sell-gold-*/            Four city pages. SHADOWED by forced redirects — not li
 vender-oro-naples/      Spanish page. SHADOWED by a forced redirect — not live.
 logo-animated.html      Internal tools. Both carry noindex.
 og-image-generator.html
+```
+
+Regenerate the favicon files if `logo.webp` ever changes:
+
+```bash
+python -c "
+from PIL import Image
+im = Image.open('logo.webp').convert('RGBA')
+im.save('favicon.ico', sizes=[(16,16),(32,32),(48,48)])
+im.resize((32,32), Image.LANCZOS).save('favicon-32x32.png')
+im.resize((16,16), Image.LANCZOS).save('favicon-16x16.png')
+apple = Image.new('RGB', (180,180), (255,255,255))
+resized = im.resize((180,180), Image.LANCZOS)
+apple.paste(resized, (0,0), resized)
+apple.save('apple-touch-icon.png')
+"
 ```
 
 The `sell-gold-*` and `vender-oro-naples` directories are kept on disk so the redirects are a
@@ -105,6 +141,9 @@ Last verified **2026-08-29**, all passing:
    homepage indexed.
 
 ## Where the real wins are
+
+Context only — see "Agent scope boundary" above. These are Naples Estate Jewelry business-level
+levers, not actions for this agent to take.
 
 Nothing in this repo moves revenue much. It is a one-page site with no backlinks. As of
 2026-08-29 the levers that matter are all outside it, in rough order: **grow Google reviews
